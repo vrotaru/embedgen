@@ -35,7 +35,7 @@ public enum EmbedConf {
         properties.load(inputStream);
     }
 
-    public JobDesc getData() {
+    public JobDesc getJob() {
         val result = new JobDesc();
         {
             result.setSourcePath(properties.getProperty("src.path"));

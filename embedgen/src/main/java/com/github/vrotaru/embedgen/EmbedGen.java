@@ -27,30 +27,38 @@ public class EmbedGen {
         config.load(new FileInputStream(CONFIG));
     }
 
-    private void run() {
-        val srcPath = config.getProperty("src.path");
-        val imagePath = config.getProperty("image.path");
-        val bitmapsPkg = config.getProperty("bitmaps.package");
-        val bitmapsCls = config.getProperty("bitmaps.class");
+    private void run(JobDesc job) {
+        val srcPath = job.getSourcePath();
+        val bitmapsPkg = job.getBitmapsPkg();
 
-        val sourceReader = new SourceReader(srcPath);
-        val decls = sourceReader.read(bitmapsPkg, bitmapsCls);
+        int current = 0;
+        val size = job.size();
+        while (current < size) {
+            val item = job.get(current);
+            val imagePath = item.getImagePath();
+            val clsName = item.getClsName();
 
-        val folderReader = new ImageFolderReader(srcPath, imagePath);
-        val images = folderReader.read();
+            val sourceReader = new SourceReader(srcPath);
+            val decls = sourceReader.read(bitmapsPkg, clsName);
 
-        val sourceWriter = new SourceWriter(images, decls);
-        sourceWriter.write(new File(srcPath), bitmapsPkg, bitmapsCls);
+            val folderReader = new ImageFolderReader(srcPath, imagePath);
+            val images = folderReader.read();
+
+            val sourceWriter = new SourceWriter(images, decls);
+            sourceWriter.write(new File(srcPath), bitmapsPkg, clsName);
+
+            current += 1;
+        }
+
     }
 
     /**
      * @param args
      */
     public static void main(String[] args) {
-        // new EmbedGen().run();
         EmbedConf conf = EmbedConf.IMPL;
 
-        System.out.println(conf.getData());
+        new EmbedGen().run(conf.getJob());
     }
 
 }
