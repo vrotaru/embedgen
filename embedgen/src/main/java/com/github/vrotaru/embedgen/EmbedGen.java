@@ -47,8 +47,10 @@ public class EmbedGen {
      * @param args
      */
     public static void main(String[] args) {
-        new EmbedGen().run();
+        // new EmbedGen().run();
+        EmbedConf conf = EmbedConf.IMPL;
 
+        System.out.println(conf.getData());
     }
 
 }

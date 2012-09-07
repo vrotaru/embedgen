@@ -6,7 +6,7 @@ package ${pkg} {
 #else
 		[Embed(source="${item.Source}")]
 #end	
-		public static const ${item.name} : Class;
+		public static const ${item.Name} : Class;
 #end
 	}	
 }
