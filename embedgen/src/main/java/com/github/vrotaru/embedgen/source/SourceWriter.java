@@ -23,6 +23,7 @@ public class SourceWriter {
 
     private final ImageDescList images;
     private final EmbedDeclList decls;
+    private final boolean       scale9;
 
     private VelocityEngine      engine            = new VelocityEngine();
     {
@@ -41,6 +42,7 @@ public class SourceWriter {
         {
             context.put("pkg", pkg);
             context.put("class", clsName);
+            context.put("scale9", scale9);
 
             context.put("items", items);
 

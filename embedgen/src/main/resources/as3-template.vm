@@ -1,7 +1,7 @@
 package ${pkg} {
 	public class ${class} {
 #foreach( $item in $items )
-#if( $item.Left > 0 )
+#if( $scale9 && $item.Left > 0 )
 		[Embed(source="${item.Source}", scaleGridLeft=${item.Left}, scaleGridTop=${item.Top}, scaleGridRight=${item.Right}, scaleGridBottom=${item.Bottom})]
 #else
 		[Embed(source="${item.Source}")]

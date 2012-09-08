@@ -37,6 +37,7 @@ public class EmbedGen {
             val item = job.get(current);
             val imagePath = item.getImagePath();
             val clsName = item.getClsName();
+            val scale9 = item.isScale9();
 
             val sourceReader = new SourceReader(srcPath);
             val decls = sourceReader.read(bitmapsPkg, clsName);
@@ -44,7 +45,7 @@ public class EmbedGen {
             val folderReader = new ImageFolderReader(srcPath, imagePath);
             val images = folderReader.read();
 
-            val sourceWriter = new SourceWriter(images, decls);
+            val sourceWriter = new SourceWriter(images, decls, scale9);
             sourceWriter.write(new File(srcPath), bitmapsPkg, clsName);
 
             current += 1;

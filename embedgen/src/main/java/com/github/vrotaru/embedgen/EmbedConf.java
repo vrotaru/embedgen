@@ -23,6 +23,9 @@ public enum EmbedConf {
 
         truthValues.put("yes", true);
         truthValues.put("no", false);
+
+        truthValues.put("on", true);
+        truthValues.put("off", false);
     }
 
     private final Properties                  properties;
@@ -52,7 +55,8 @@ public enum EmbedConf {
     private void readClassesInto(final JobDesc result, String[] clsNames) {
         for (String clsName : clsNames) {
             val cleanName = clsName.trim();
-            val imagePath = properties.getProperty(cleanName + ".path");
+            val imagePath = properties.getProperty(cleanName + ".path")
+                    .trim();
             val scale9Repr = properties.getProperty(cleanName + ".scale9")
                     .trim()
                     .toLowerCase();
