@@ -69,6 +69,8 @@ public class SourceWriter {
     @SneakyThrows
     private PrintWriter makeWriter(File folder, String pkg, String clsName) {
         val pkgFolder = new File(folder, pkg.replace('.', '/'));
+        pkgFolder.mkdirs();
+
         val clsFile = new File(pkgFolder, clsName + ".as");
 
         return new PrintWriter(clsFile);
