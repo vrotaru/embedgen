@@ -1,6 +1,8 @@
 package com.github.vrotaru.embedgen;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -12,7 +14,7 @@ import com.github.vrotaru.embedgen.source.EmbedClass;
 
 public enum EmbedConf {
 
-    IMPL("embed.properties");
+    IMPL;
     //
     // Implementation
     //
@@ -28,17 +30,10 @@ public enum EmbedConf {
         truthValues.put("off", false);
     }
 
-    private final Properties                  properties;
-
     @SneakyThrows
-    private EmbedConf(String filename) {
-        properties = new Properties();
-        FileInputStream inputStream = new FileInputStream(filename);
+    public JobDesc getJob(String filename) {
+        val properties = readProperties(filename);
 
-        properties.load(inputStream);
-    }
-
-    public JobDesc getJob() {
         val result = new JobDesc();
         {
             result.setSourcePath(properties.getProperty("src.path"));
@@ -46,13 +41,22 @@ public enum EmbedConf {
 
             String[] clsNames = properties.getProperty("bitmaps.classes").split(",");
 
-            readClassesInto(result, clsNames);
+            readClassesInto(result, clsNames, properties);
         }
 
         return result;
     }
 
-    private void readClassesInto(final JobDesc result, String[] clsNames) {
+    private Properties readProperties(String filename) throws FileNotFoundException, IOException {
+        val properties = new Properties();
+        val inputStream = new FileInputStream(filename);
+
+        properties.load(inputStream);
+        return properties;
+    }
+
+    private void readClassesInto(final JobDesc result, String[] clsNames, Properties properties) {
+
         for (String clsName : clsNames) {
             val cleanName = clsName.trim();
             val imagePath = properties.getProperty(cleanName + ".path")

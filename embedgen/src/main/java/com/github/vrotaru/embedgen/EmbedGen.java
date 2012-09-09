@@ -1,10 +1,7 @@
 package com.github.vrotaru.embedgen;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.util.Properties;
 
-import lombok.SneakyThrows;
 import lombok.val;
 
 import com.github.vrotaru.embedgen.images.ImageFolderReader;
@@ -15,26 +12,15 @@ public class EmbedGen {
 
     private static final String CONFIG = "embed.properties";
 
-    private Properties          config;
+    private void run() {
+        val conf = EmbedConf.IMPL;
+        val job = conf.getJob(CONFIG);
 
-    public EmbedGen() {
-        init();
-    }
-
-    @SneakyThrows
-    private void init() {
-        config = new Properties();
-        config.load(new FileInputStream(CONFIG));
-    }
-
-    private void run(JobDesc job) {
         val srcPath = job.getSourcePath();
         val bitmapsPkg = job.getBitmapsPkg();
 
-        int current = 0;
-        val size = job.size();
-        while (current < size) {
-            val item = job.get(current);
+        val items = job.getItems();
+        for (val item : items) {
             val imagePath = item.getImagePath();
             val clsName = item.getClsName();
             val scale9 = item.isScale9();
@@ -47,8 +33,6 @@ public class EmbedGen {
 
             val sourceWriter = new SourceWriter(images, decls, scale9);
             sourceWriter.write(new File(srcPath), bitmapsPkg, clsName);
-
-            current += 1;
         }
 
     }
@@ -57,9 +41,7 @@ public class EmbedGen {
      * @param args
      */
     public static void main(String[] args) {
-        EmbedConf conf = EmbedConf.IMPL;
-
-        new EmbedGen().run(conf.getJob());
+        new EmbedGen().run();
     }
 
 }
