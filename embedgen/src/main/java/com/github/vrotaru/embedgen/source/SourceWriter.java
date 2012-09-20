@@ -35,10 +35,11 @@ public class SourceWriter {
             engine.init(properties);
         }
     }
+    private VelocityContext     context;
 
     public void write(File folder, String pkg, String clsName) {
         val items = new ArrayList<EmbedDecl>();
-        val context = new VelocityContext();
+        context = new VelocityContext();
         {
             context.put("pkg", pkg);
             context.put("class", clsName);

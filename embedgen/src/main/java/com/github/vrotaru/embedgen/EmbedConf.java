@@ -11,6 +11,7 @@ import lombok.SneakyThrows;
 import lombok.val;
 
 import com.github.vrotaru.embedgen.source.EmbedClass;
+import com.github.vrotaru.embedgen.source.EmbedExtra;
 
 public enum EmbedConf {
 
@@ -65,15 +66,37 @@ public enum EmbedConf {
                     .trim()
                     .toLowerCase();
             val scale9 = truthValues.get(scale9Repr);
+            val extraRepr = properties.getProperty(cleanName + ".extra");
+            val extra = readExtra(extraRepr);
 
             val embed = new EmbedClass();
             {
                 embed.setClsName(cleanName);
                 embed.setImagePath(imagePath);
                 embed.setScale9(scale9);
+                embed.setExtra(extra);
             }
 
             result.add(embed);
+        }
+    }
+
+    private EmbedExtra readExtra(String repr) {
+        if (repr == null) {
+            return null;
+        }
+        else {
+            String[] parts = repr.split("->");
+            String template = parts[0].trim();
+            String output = parts[1].trim();
+
+            val extra = new EmbedExtra();
+            {
+                extra.setOutputFile(output);
+                extra.setVelocityTemplate(template);
+            }
+
+            return extra;
         }
     }
 }
