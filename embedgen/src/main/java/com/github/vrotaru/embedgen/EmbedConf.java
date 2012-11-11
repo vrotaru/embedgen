@@ -1,5 +1,6 @@
 package com.github.vrotaru.embedgen;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,8 +33,9 @@ public enum EmbedConf {
     }
 
     @SneakyThrows
-    public JobDesc getJob(String filename) {
-        val properties = readProperties(filename);
+    public JobDesc getJob(File workingDir, String filename) {
+
+        val properties = readProperties(workingDir, filename);
 
         val result = new JobDesc();
         {
@@ -48,9 +50,10 @@ public enum EmbedConf {
         return result;
     }
 
-    private Properties readProperties(String filename) throws FileNotFoundException, IOException {
+    private Properties readProperties(File workingDir, String filename) throws FileNotFoundException, IOException {
         val properties = new Properties();
-        val inputStream = new FileInputStream(filename);
+        val file = new File(workingDir, filename);
+        val inputStream = new FileInputStream(file);
 
         properties.load(inputStream);
         return properties;

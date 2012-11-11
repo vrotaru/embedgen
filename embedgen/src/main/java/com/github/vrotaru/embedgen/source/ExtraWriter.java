@@ -1,5 +1,6 @@
 package com.github.vrotaru.embedgen.source;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.util.Properties;
 
@@ -24,8 +25,9 @@ public class ExtraWriter {
     }
 
     @SneakyThrows
-    public void write(String fileName, String templateName) {
-        val writer = new FileWriter(fileName);
+    public void write(File workingDir, String fileName, String templateName) {
+        val file = new File(workingDir, fileName);
+        val writer = new FileWriter(file);
         val template = engine.getTemplate(templateName);
 
         template.merge(context, writer);

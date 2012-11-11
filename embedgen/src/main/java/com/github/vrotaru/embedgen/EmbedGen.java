@@ -21,9 +21,9 @@ public class EmbedGen implements IGenerate {
     private static final String CONFIG = "embed.properties";
 
     @Override
-    public void generate() {
+    public void generate(File workingDir) {
         EmbedConf conf = EmbedConf.IMPL;
-        JobDesc job = conf.getJob(CONFIG);
+        JobDesc job = conf.getJob(workingDir, CONFIG);
 
         String srcPath = job.getSourcePath();
         String bitmapsPkg = job.getBitmapsPkg();
@@ -35,20 +35,20 @@ public class EmbedGen implements IGenerate {
             boolean scale9 = item.isScale9();
             EmbedExtra extra = item.getExtra();
 
-            val sourceReader = new SourceReader(srcPath);
+            val sourceReader = new SourceReader(workingDir, srcPath);
             EmbedDeclList decls = sourceReader.read(bitmapsPkg, clsName);
 
-            val folderReader = new ImageFolderReader(srcPath, imagePath);
+            val folderReader = new ImageFolderReader(workingDir, srcPath, imagePath);
             ImageDescList images = folderReader.read();
 
             val sourceWriter = new SourceWriter(images, decls, scale9);
-            sourceWriter.write(new File(srcPath), bitmapsPkg, clsName);
+            sourceWriter.write(new File(workingDir, srcPath), bitmapsPkg, clsName);
 
             if (extra != null) {
                 VelocityContext context = sourceWriter.getContext();
                 val extraWriter = new ExtraWriter(context);
 
-                extraWriter.write(extra.getOutputFile(), extra.getVelocityTemplate());
+                extraWriter.write(workingDir, extra.getOutputFile(), extra.getVelocityTemplate());
 
             }
         }
@@ -58,7 +58,9 @@ public class EmbedGen implements IGenerate {
      * @param args
      */
     public static void main(String[] args) {
-        new EmbedGen().generate();
+        String currentDir = System.getProperty("user.dir");
+        File workingDir = new File(currentDir);
+        new EmbedGen().generate(workingDir);
     }
 
 }

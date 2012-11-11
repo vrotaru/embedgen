@@ -13,6 +13,7 @@ import lombok.val;
 @Data
 public class ImageFolderReader {
 
+    public final File   workingDir;
     public final String srcPath;
     public final String imagePath;
 
@@ -20,7 +21,7 @@ public class ImageFolderReader {
     public ImageDescList read() {
         val images = new ImageDescList();
 
-        val srcFolder = new File(srcPath);
+        val srcFolder = new File(workingDir, srcPath);
         val imageFolder = new File(srcFolder, imagePath);
 
         String[] filenames = imageFolder.list();

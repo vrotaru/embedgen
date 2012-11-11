@@ -12,13 +12,14 @@ import lombok.val;
 @Data
 public class SourceReader {
 
+    private final File   workingDir;
     private final String srcPath;
 
     @SneakyThrows
     public EmbedDeclList read(String pkg, String cls) {
         val list = new EmbedDeclList();
 
-        val srcFolder = new File(srcPath);
+        val srcFolder = new File(workingDir, srcPath);
         val clsFolder = new File(srcFolder, pkg.replace('.', '/'));
         val clsFile = new File(clsFolder, cls + ".as");
 
