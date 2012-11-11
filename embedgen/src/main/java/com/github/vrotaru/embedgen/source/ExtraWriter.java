@@ -38,7 +38,7 @@ public class ExtraWriter {
     }
 
     @SneakyThrows
-    public void write(File workingDir, String fileName, String templateName) {
+    public void write(String fileName, String templateName) {
         initVelocityEngine();
 
         val file = new File(workingDir, fileName);
