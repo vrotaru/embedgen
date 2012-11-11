@@ -46,7 +46,7 @@ public class EmbedGen implements IGenerate {
 
             if (extra != null) {
                 VelocityContext context = sourceWriter.getContext();
-                val extraWriter = new ExtraWriter(context);
+                val extraWriter = new ExtraWriter(workingDir, context);
 
                 extraWriter.write(workingDir, extra.getOutputFile(), extra.getVelocityTemplate());
 
