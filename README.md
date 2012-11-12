@@ -52,10 +52,18 @@ package acme.bitmaps {
 }
 
 ```
-Im trying to guess acceptable values for scaleGrid.. stuff, but you can edit the values of scaleGridLeft, scaleGridTop, etc. and it will be preserverd the next time the command will be run. You can delete scale\* attributes and those will not be recreated.
+Im trying to guess acceptable values for scaleGrid.. stuff, but you can edit the values 
+of scaleGridLeft, scaleGridTop, etc. 
+and those will be preserverd the next time the command will be run. 
+You can delete scale\* attributes and those will not be recreated.
 
 And, of course, you can add/delete images, re-run the command and have the code up to date with the images.
 
-**A word of warning though**. I have not implemented a full parser for the fragment of ActionScript that I use, and I expect the Emded spec to be on one line, which is almost always the case.
+**A word of warning though**. I have not implemented a full parser for the fragment of 
+ActionScript that I use, and I expect the 
+Emded spec to be on one line, Which, is almost always the case.
 
-P.S There is an Eclipse plugin which can run the command above from within Eclipse, but at the moment it is just a demo of how to make an Eclipse plugin usign brute force and Scotch tape. A bit too dirty and personal to be shown to general public.
+P.S There is an Eclipse plugin which can run the command above from within Eclipse, 
+but at the moment it is just a demo of how to make an Eclipse plugin 
+using brute force and Scotch tape. 
+A bit too dirty and personal to be shown to general public.
