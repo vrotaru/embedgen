@@ -7,9 +7,9 @@ Suppose you are a little grasshoper.. Oh wait, that's not it. So, back to code.
 
 Flex has neat mechanism for working with images by way of *embeding* them. The problem is that if your have to embed more than 3 images it starts to became tedious. The little jar that `maven package` generates is supposed that to partly automate specification of *Embed* classes 
 
-So let start with the images. Usually in a Flex projects images are in the `src\assets` folder like in the following image:
+So let start with the images. Usually in a Flex projects images are in the `src/assets` folder like in the following image:
 
-![Image Assets](assets/image-assets.png)
+![Image Assets](http://github.com/vrotaru/embedgen/raw/master/assets/image-assets.png)
 
 We add at the root of the Flex project an `embed.properties` file with the following content
 
@@ -27,21 +27,18 @@ Backgrounds.scale9  = yes
 
 Buttons.path        = assets/buttons
 Buttons.scale9      = yes
-
 ```
-
 I hope the format is self-explanatory. 
 
 Then in the terminal switch to the root your project (where the `embed.properties` file is) and run the command
 
-`$ java -jar embedgen.jar
+`$ java -jar embedgen.jar`
 
-The result can be seen in the following image:
+The generated classes can be seen in the following image:
 
-![Generated Classes](assets/image-classes.png)
+![Generated Classes](http://github.com/vrotaru/embedgen/raw/master/assets/image-classes.png)
 
 and here is the `Backgrounds` class
-
 ```ActionScript
 package acme.bitmaps {
 	public class Backgrounds {
@@ -55,14 +52,10 @@ package acme.bitmaps {
 }
 
 ```
-
-You can edit the values of scaleGridLeft, scaleGridTop, etc. and it will be preserverd the next time the command will be run. You can delete scale\* attributes and those will not be recreated.
+Im trying to guess acceptable values for scaleGrid.. stuff, but you can edit the values of scaleGridLeft, scaleGridTop, etc. and it will be preserverd the next time the command will be run. You can delete scale\* attributes and those will not be recreated.
 
 And, of course, you can add/delete images, re-run the command and have the code up to date with the images.
 
-A word of warning though. I have not implemented a full parser for the fragment of ActionScript that use, therefore I expect the Emded spec to be on one line.
+**A word of warning though**. I have not implemented a full parser for the fragment of ActionScript that I use, and I expect the Emded spec to be on one line, which is almost always the case.
 
-
-
-
-
+P.S There is an Eclipse plugin which can run the command above from within Eclipse, but at the moment it is just a demo of how to make an Eclipse plugin usign brute force and Scotch tape. A bit too dirty and personal to be shown to general public.
